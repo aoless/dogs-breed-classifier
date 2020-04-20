@@ -44,7 +44,20 @@
   </header>
 
 
-  <
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1>Check the breed of dog based on his photo</h1>
+      <p class="lead text-muted">Upload a photo and press the predict button to check the dog's breed</p>
+      <img id="dog" src="https://www.nicepng.com/png/detail/592-5921097_how-to-draw-a-dog-easy-step-by.png" class="img" height="320" width="320" alt="dog_image">
+      <form method="post" action="/" enctype="multipart/form-data">
+          <input type="file" class="btn btn-outline-primary my-2" name="file" onchange="readURL(this);" autocomplete="off" required>
+          <button type="checkbox" class="btn btn-outline-success">Predict</button>
+      </form>
+    </div>
+  </section>
+
+
+
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
