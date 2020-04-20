@@ -12,12 +12,38 @@ from werkzeug.utils import secure_filename
 
 from app import app
 
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
+
+
+@app.route('/', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            return redirect(request.url)
+
+        file = request.files['file']
+        if file.filename == '':
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save("static/" + filepath)
+            session['filepath'] = filepath
+            return redirect(url_for('.go', filepath=filepath))
+        else:
+            return redirect(request.url)
 
 
 # web page that handles user query and displays model results
