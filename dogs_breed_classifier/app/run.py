@@ -11,7 +11,6 @@ import tensorflow as tf
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from joblib import load
-from plotly.graph_objs import Bar
 from werkzeug.utils import secure_filename
 
 from app import app
@@ -79,11 +78,7 @@ def go():
         dog_names,
         )
 
-    return render_template(
-        'go.html',
-        filepath=filepath,
-        prediction=prediction
-    )
+    return render_template('go.html', filepath=filepath, prediction=prediction)
 
 
 def main():
