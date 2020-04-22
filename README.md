@@ -31,7 +31,7 @@ If you want to train model and play a little bit with data feel free to use note
 attached in this repo. Remeber to first install notebook_requirements.txt 
 and donwload dataset. You can acces it from web page level.
 
-Remember to change a path to dataset in notebook before running first cell. 
+Remember to change all paths in notebook before running first cell!.
 
 ## Licensing, Authors, Acknowledgements<a name="licensing"></a>
 The MIT License
