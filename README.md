@@ -4,7 +4,8 @@ Web application to recognize dogs based on their images
 ### Table of Contents
 
 1. [Installation](#installation)
-2. [Licensing, Authors, and Acknowledgements](#licensing)
+2. [Training](#training)
+3. [Licensing, Authors, and Acknowledgements](#licensing)
 
 ## Installation <a name="installation"></a>
 
@@ -25,6 +26,12 @@ Web application to recognize dogs based on their images
 
 5. Go to http://0.0.0.0:3001/
 
-## Licensing, Authors, Acknowledgements<a name="licensing"></a>
+## Training<a name="training"></a>
+If you want to train model and play a little bit with data feel free to use notebook
+attached in this repo. Remeber to first install notebook_requirements.txt 
+and donwload dataset. You can acces it from web page level.
 
+Remember to change a path to dataset in notebook before running first cell. 
+
+## Licensing, Authors, Acknowledgements<a name="licensing"></a>
 The MIT License
