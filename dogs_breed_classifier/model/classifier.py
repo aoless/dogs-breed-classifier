@@ -3,8 +3,21 @@ from dogs_breed_classifier.data import data_loader
 
 imagenet_resnet = tf.keras.applications.ResNet50(weights='imagenet')
 
-def make_predictions(model):
-    pass
+def make_predictions(model, img_path, facecascade_path):
+    if _face_detector(img_path, facecascade_path):
+        names, percentages = _predict_breed(img_path)
+        answer = ""
+        for name, pct in zip(names, percentages):
+            answer += f"\n{name} ({pct:.4} %)"
+        return f"I'm pretty sure that's human!\nBut as a dog it could be... {answer}"
+    elif dog_detector(img_path):
+        names, percentages = _predict_breed(img_path)
+        answer = ""
+        for name, pct in zip(names, percentages):
+            answer += f"\n{name} ({pct:.4} %)"
+        return f"That's a dog! and he looks like... {answer}"
+    else:
+        return "I can't recognize what is that"
 
 
 def _extract_resnet50(tensor):
@@ -17,7 +30,7 @@ def _extract_resnet50(tensor):
 
 def _predict_breed(img_path):
     # extract bottleneck features
-    bottleneck_feature = extract_Resnet50(data_loader.path_to_tensor(img_path))
+    bottleneck_feature = _extract_resnet50(data_loader.path_to_tensor(img_path))
     # obtain predicted vector
     predicted_vector = resnet_model.predict(bottleneck_feature)[0]
 
