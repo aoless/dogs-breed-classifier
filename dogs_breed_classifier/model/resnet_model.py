@@ -1,5 +1,4 @@
 import tensorflow as tf
-tf.get_logger().setLevel('INFO')
 
 def load_pretrained_model(num_of_outputs, checkpoint_path):
     """Creates and loads resnet model based on the provided checkpoint_path"""

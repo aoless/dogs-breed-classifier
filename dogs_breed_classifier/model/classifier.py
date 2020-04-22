@@ -5,7 +5,6 @@ import tensorflow as tf
 from tensorflow.keras.applications.resnet import preprocess_input
 from tensorflow.keras.preprocessing import image
 
-tf.get_logger().setLevel('INFO')
 imagenet_resnet = tf.keras.applications.ResNet50(weights='imagenet')
 
 def make_predictions(model, img_path, facecascade_path, dog_names):
@@ -37,11 +36,7 @@ def make_predictions(model, img_path, facecascade_path, dog_names):
 
 def _extract_resnet50(tensor):
     """Converts image tensor to resnet bottleneck feature"""
-	return tf.keras.applications.ResNet50(
-        weights='imagenet',
-        include_top=False
-        ).predict(preprocess_input(tensor)
-    )
+    return tf.keras.applications.ResNet50(weights='imagenet', include_top=False).predict(preprocess_input(tensor))
 
 
 def _predict_breed(img_path, model, dog_names):

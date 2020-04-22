@@ -17,7 +17,6 @@ from app import app
 from dogs_breed_classifier.model import classifier
 from dogs_breed_classifier.model import resnet_model
 
-tf.get_logger().setLevel('INFO')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 CLASS_NUMS = 133
 
