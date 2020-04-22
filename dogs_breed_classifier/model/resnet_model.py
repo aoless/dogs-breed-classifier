@@ -1,18 +1,17 @@
 import tensorflow as tf
 
-def load_pretrained_model(bottleneck_shape, num_of_outputs, checkpoint_path):
-    resnet_model = create(bottleneck_shape, num_of_outputs)
+def load_pretrained_model(num_of_outputs, checkpoint_path):
+    resnet_model = create(num_of_outputs)
     resnet_model.load_weights(checkpoint_path)
 
     return resnet_model
 
 
-def create(bottleneck_shape, num_of_outputs):
+def create(num_of_outputs):
     """
     Creates custom ResNet50 architecture using transfer learning.
 
     Args:
-        bottleneck_shape - size of embeddings from orginal ResNet50 model
         num_of_outpus - number of classes which modified model should classify
 
     Returns:

@@ -15,7 +15,6 @@ from plotly.graph_objs import Bar
 from werkzeug.utils import secure_filename
 
 from app import app
-from dogs_breed_classifier.data import data_loader
 from dogs_breed_classifier.model import classifier
 from dogs_breed_classifier.model import resnet_model
 
@@ -27,12 +26,7 @@ dog_names = load("../data/dog_names.pkl")
 
 cascade_model_path = "../data/cascade_classifier/haarcascade_frontalface_alt.xml"
 
-train_resnet, valid_resnet, test_resnet = data_loader.load_pretrainted_resnet_features(
-    "../data/bottleneck_features/resnet_embeddings.npz"
-    )
-
 model = resnet_model.load_pretrained_model(
-    train_resnet.shape[1:],
     CLASS_NUMS,
     "../data/pretrained_models/weights.best.resnet.hdf5",
     )

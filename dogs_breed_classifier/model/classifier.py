@@ -3,8 +3,7 @@ import numpy as np
 
 import tensorflow as tf
 from tensorflow.keras.applications.resnet import preprocess_input
-
-from dogs_breed_classifier.data import data_loader
+from tensorflow.keras.preprocessing import image
 
 
 imagenet_resnet = tf.keras.applications.ResNet50(weights='imagenet')
@@ -36,7 +35,7 @@ def _extract_resnet50(tensor):
 
 def _predict_breed(img_path, model, dog_names):
     # extract bottleneck features
-    bottleneck_feature = _extract_resnet50(data_loader.path_to_tensor(img_path))
+    bottleneck_feature = _extract_resnet50(_path_to_tensor(img_path))
     # obtain predicted vector
     model.summary()
     predicted_vector = model.predict(bottleneck_feature)[0]
@@ -59,10 +58,18 @@ def _face_detector(img_path, facecascade_path):
 
 
 def _dog_detector(img_path, imagenet_resnet):
-    img = preprocess_input(data_loader.path_to_tensor(img_path))
+    img = preprocess_input(_path_to_tensor(img_path))
     prediction = np.argmax(imagenet_resnet.predict(img))
 
     return ((prediction <= 268) & (prediction >= 151))
 
+
+def _path_to_tensor(img_path):
+    # loads RGB image as PIL.Image.Image type
+    img = image.load_img(img_path, target_size=(224, 224))
+    # convert PIL.Image.Image type to 3D tensor with shape (224, 224, 3)
+    x = image.img_to_array(img)
+    # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
+    return np.expand_dims(x, axis=0)
 
 
