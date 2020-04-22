@@ -1,17 +1,23 @@
+import cv2
+import numpy as np
+
+import tensorflow as tf
+from tensorflow.keras.applications.resnet import preprocess_input
+
 from dogs_breed_classifier.data import data_loader
 
 
 imagenet_resnet = tf.keras.applications.ResNet50(weights='imagenet')
 
-def make_predictions(model, img_path, facecascade_path):
+def make_predictions(model, img_path, facecascade_path, dog_names):
     if _face_detector(img_path, facecascade_path):
-        names, percentages = _predict_breed(img_path)
+        names, percentages = _predict_breed(img_path, model, dog_names)
         answer = ""
         for name, pct in zip(names, percentages):
             answer += f"\n{name} ({pct:.4} %)"
         return f"I'm pretty sure that's human!\nBut as a dog it could be... {answer}"
-    elif dog_detector(img_path):
-        names, percentages = _predict_breed(img_path)
+    elif _dog_detector(img_path, imagenet_resnet):
+        names, percentages = _predict_breed(img_path, model, dog_names)
         answer = ""
         for name, pct in zip(names, percentages):
             answer += f"\n{name} ({pct:.4} %)"
@@ -28,11 +34,14 @@ def _extract_resnet50(tensor):
     )
 
 
-def _predict_breed(img_path):
+def _predict_breed(img_path, model, dog_names):
     # extract bottleneck features
+    print("BEFORE BOTTLE")
     bottleneck_feature = _extract_resnet50(data_loader.path_to_tensor(img_path))
+    print("BOTTLENECK SHAPE: ", bottleneck_feature.shape)
     # obtain predicted vector
-    predicted_vector = resnet_model.predict(bottleneck_feature)[0]
+    model.summary()
+    predicted_vector = model.predict(bottleneck_feature)[0]
 
     # return dog breed that is predicted by the model
     indices = predicted_vector.argsort()[-3:][::-1]

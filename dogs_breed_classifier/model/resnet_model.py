@@ -1,5 +1,12 @@
 import tensorflow as tf
 
+def load_pretrained_model(bottleneck_shape, num_of_outputs, checkpoint_path):
+    resnet_model = create(bottleneck_shape, num_of_outputs)
+    resnet_model.load_weights(checkpoint_path)
+
+    return resnet_model
+
+
 def create(bottleneck_shape, num_of_outputs):
     """
     Creates custom ResNet50 architecture using transfer learning.
@@ -12,7 +19,7 @@ def create(bottleneck_shape, num_of_outputs):
         ResNet50 model with additional layers at the end
     """
     global_average_layer = tf.keras.layers.GlobalAveragePooling2D(
-        input_shape=bottleneck_shape,
+        input_shape=(7, 7, 2048),
         )
     dense = tf.keras.layers.Dense(512)
     dropout = tf.keras.layers.Dropout(0.4)
@@ -25,15 +32,10 @@ def create(bottleneck_shape, num_of_outputs):
         prediction_layer,
     ])
 
+    resnet_model.compile(
+        loss='categorical_crossentropy',
+        optimizer='adam',
+        metrics=['accuracy']
+        )
+
     return resnet_model
-    
-
-def load_weights(model, path):
-    try:
-        model.load_weights(path)
-    else:
-        print("""Couldn't load weights into a provided model. 
-        Wrong architecture or file path""")
-
-    return model
-
