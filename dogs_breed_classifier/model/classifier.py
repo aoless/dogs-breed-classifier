@@ -36,9 +36,7 @@ def _extract_resnet50(tensor):
 
 def _predict_breed(img_path, model, dog_names):
     # extract bottleneck features
-    print("BEFORE BOTTLE")
     bottleneck_feature = _extract_resnet50(data_loader.path_to_tensor(img_path))
-    print("BOTTLENECK SHAPE: ", bottleneck_feature.shape)
     # obtain predicted vector
     model.summary()
     predicted_vector = model.predict(bottleneck_feature)[0]

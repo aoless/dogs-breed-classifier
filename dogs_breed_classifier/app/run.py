@@ -31,8 +31,6 @@ train_resnet, valid_resnet, test_resnet = data_loader.load_pretrainted_resnet_fe
     "../data/bottleneck_features/resnet_embeddings.npz"
     )
 
-print("TRAIN RESNET: ", train_resnet.shape)
-
 model = resnet_model.load_pretrained_model(
     train_resnet.shape[1:],
     CLASS_NUMS,
