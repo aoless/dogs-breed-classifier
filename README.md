@@ -50,6 +50,7 @@ If you are big dogs fan and you keep a lot of photos on the computer you can use
 | model        | classifier.py| module for classifying images |
 
 ## Training<a name="training"></a>
+For training I've used data from: <a href="https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip" class="text-white">dataset</a>
 If you want to train model and play a little bit with data feel free to use notebook
 attached in this repo. Follow the cells and you should not have the slightest problems with creating your own model :)
 
