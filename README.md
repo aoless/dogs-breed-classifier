@@ -13,8 +13,9 @@ If you are big dogs fan and you keep a lot of photos on the computer you can use
 ### Table of Contents
 
 1. [Installation](#installation)
-2. [Training](#training)
-3. [Licensing, Authors, and Acknowledgements](#licensing)
+2. [Files description](#files)
+3. [Training](#training)
+4. [Licensing, Authors, and Acknowledgements](#licensing)
 
 ## Installation <a name="installation"></a>
 
@@ -34,6 +35,19 @@ If you are big dogs fan and you keep a lot of photos on the computer you can use
     `python run.py`
 
 5. Go to http://0.0.0.0:3001/
+
+## Files Descriptions <a name="files"></a>
+
+| Module        | Module           | Explanation  |
+| ------------- |:-------------:| -----:|
+| app           | app.py         | setup flask application |
+| app           | run.py         | run flask web application |
+| app           | templates      | html templates |
+| data          | bottleneck_features| pretrained ResNet50 features |
+| data          | cascade_classifier| openCV model for recognizing human faces |
+| data          | pretrained_models| pretrained tf 2.0 ResNet50 model |
+| model        | resnet_model.py| create model and load weights |
+| model        | classifier.py| module for classifying images |
 
 ## Training<a name="training"></a>
 If you want to train model and play a little bit with data feel free to use notebook
