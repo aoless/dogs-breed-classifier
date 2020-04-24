@@ -26,7 +26,7 @@ def make_predictions(model, img_path, facecascade_path, dog_names):
 
     if _face_detector(img_path, facecascade_path):
         names, percentages = _predict_breed(img_path, model, dog_names)
-        return f"I'm pretty sure that's human!/nBut as a dog it could be {names[0]}"
+        return f"I'm pretty sure that's human! But as a dog it could be {names[0]}"
     elif _dog_detector(img_path, imagenet_resnet):
         names, percentages = _predict_breed(img_path, model, dog_names)
         return f"That's a dog! He looks like {names[0]}"

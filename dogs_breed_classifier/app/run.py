@@ -26,7 +26,7 @@ cascade_model_path = "../data/cascade_classifier/haarcascade_frontalface_alt.xml
 
 model = resnet_model.load_pretrained_model(
     CLASS_NUMS,
-    "../data/pretrained_models/weights.best.resnet.hdf5",
+    "../data/pretrained_models/weights.best.run-17.hdf5",
     )
 
 
@@ -40,6 +40,7 @@ def allowed_file(filename):
 def index():
     # clean all uploaded files
     files = glob("static/uploaded/*.jpg")
+    files.extend(glob('static/uploaded/*.png'))
     for f in files:
         os.remove(f)
     return render_template('index.html')
