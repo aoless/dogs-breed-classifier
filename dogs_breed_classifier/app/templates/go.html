@@ -47,11 +47,15 @@
   <section class="jumbotron text-center">
     <div class="container">
       <p class="lead">That's yours dogs breed</p>
-      <img src="{{ url_for('static', filename=filepath) }}" class="img" height="300" width="300">
-      <p class="text-center"><i>{{prediction}}</i></p>
-      <form method="post" action="/" enctype="multipart/form-data">
-          <button type="checkbox" class="btn btn-lg btn-outline-success">Go back</button>
-      </form>
+      <img src="{{ url_for('static', filename=filepath) }}" class="img" height="300" width="300" img style="padding-bottom: 10px;">
+      <div class="container">
+        <form method="post" action="/" enctype="multipart/form-data">
+            <button type="checkbox" class="btn btn-lg btn-outline-success" mb-3>Go back</button>
+        </form>
+      </div>
+    </div>
+    <div class="container">
+      <div id="plot"></div>
     </div>
   </section>
 
@@ -61,6 +65,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="../static/scripts/interactions.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script type="text/javascript">
+    const graph = {{graphJSON | safe}};
+    Plotly.newPlot("plot", graph.data, graph.layout);
+  </script>
 </body>
 </html>
 

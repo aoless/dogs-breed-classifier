@@ -11,6 +11,7 @@ import tensorflow as tf
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from joblib import load
+from plotly.graph_objs import Bar
 from werkzeug.utils import secure_filename
 
 from app import app
@@ -40,6 +41,7 @@ def allowed_file(filename):
 def index():
     # clean all uploaded files
     files = glob("static/uploaded/*.jpg")
+    files.extend(glob('static/uploaded/*.jpeg'))
     files.extend(glob('static/uploaded/*.png'))
     for f in files:
         os.remove(f)
@@ -71,14 +73,42 @@ def upload_file():
 def go():
     filepath = request.args['filepath']
     image_path_for_model = "static/" + filepath
-    prediction = classifier.make_predictions(
+    answer, names, percentages = classifier.make_predictions(
         model,
         image_path_for_model,
         cascade_model_path,
         dog_names,
         )
 
-    return render_template('go.html', filepath=filepath, prediction=prediction)
+    graph = {
+            'data': [
+                Bar(
+                    x=percentages,
+                    y=names,
+                    orientation='h',
+                    text=names,
+                    textposition='auto',
+                    marker=dict(
+                        color='rgba(51, 102, 255, 0.7)',
+                        line=dict(color='rgba(51, 51, 153, 0.5)', width=1)
+                    ),
+                ),
+            ],
+
+            'layout': {
+                'title': answer,
+                'xaxis': {
+                    'title': "Certainty [%]",
+                },
+                'yaxis': {
+                    'ticks': "",
+                    'showticklabels': False,
+                },
+            },
+        }
+
+    graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
+    return render_template('go.html', filepath=filepath, graphJSON=graphJSON)
 
 
 def main():

@@ -22,16 +22,18 @@ def make_predictions(model, img_path, facecascade_path, dog_names):
         String with prediction
     """
 
-    answer = ""
-
     if _face_detector(img_path, facecascade_path):
         names, percentages = _predict_breed(img_path, model, dog_names)
-        return f"I'm pretty sure that's human! But as a dog it could be {names[0]}"
+        answer = "I think the figure in the picture is a human.<br>Of the breeds of dogs, he resembles..."
     elif _dog_detector(img_path, imagenet_resnet):
         names, percentages = _predict_breed(img_path, model, dog_names)
-        return f"That's a dog! He looks like {names[0]}"
+        answer = "This photo resembles the most..."
     else:
-        return "I can't recognize what is that"
+        answer = "Unfortunately I can not recognize the object in the picture"
+        names = ["I don't know"]
+        percentages = [100]
+
+    return answer, names[::-1], percentages[::-1]
 
 
 def _extract_resnet50(tensor):
@@ -44,7 +46,6 @@ def _predict_breed(img_path, model, dog_names):
     # extract bottleneck features
     bottleneck_feature = _extract_resnet50(_path_to_tensor(img_path))
     # obtain predicted vector
-    model.summary()
     predicted_vector = model.predict(bottleneck_feature)[0]
 
     # return dog breed that is predicted by the model
