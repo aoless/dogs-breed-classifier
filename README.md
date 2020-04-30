@@ -29,7 +29,7 @@ If you are big dogs fan and you keep a lot of photos on the computer you can use
 
 `export OLD_PYTHONPATH="$PYTHONPATH"`
 
-`export PYTHONPATH="path_to_project/disaster-response-project/"`
+`export PYTHONPATH="path_to_project/dogs-breed-classifier/"`
 
 4. Run the following command in the app's directory to run your web app
     `python run.py`
